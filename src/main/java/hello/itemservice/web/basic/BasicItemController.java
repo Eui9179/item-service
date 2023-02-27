@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -73,11 +74,27 @@ public class BasicItemController {
         return "basic/item";
     }
 
-    @PostMapping("/add")
+//    @PostMapping("/add")
     public String addItemV4(Item item) {
         // @ModelAttribute 생략 가능
+        // PRG 패턴
+        // Post - Redirect - Get
+        // 문제점: + item.get() 이렇게 넣으면 인코딩이 되지 않고 넘어가기 때문에 위험하다
         itemRepository.save(item);
-        return "basic/item";
+        return "redirect:/basic/items/" + item.getId();
+    }
+
+    @PostMapping("/add")
+    public String addItemV5(Item item, RedirectAttributes redirectAttributes) {
+        /**
+         * RedirectAttribute를 사용하면 리다이렉트에 값을 보낼 수 있고
+         * 인코딩 문제도 자동으로 해결된다.
+         * 치환이 되면 변수로 넘어가고 치환이 되지 않으면 Query Parameter로 넘어간다.
+         */
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/basic/items/{itemId}";
     }
 
     @GetMapping("{itemId}/edit")
