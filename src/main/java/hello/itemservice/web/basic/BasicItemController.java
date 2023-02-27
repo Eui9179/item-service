@@ -5,9 +5,7 @@ import hello.itemservice.domain.item.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -32,8 +30,58 @@ public class BasicItemController {
         return "basic/item";
     }
 
+    @GetMapping("/add")
+    public String addForm() {
+        return "basic/addForm";
+    }
+
+//    @PostMapping("/add")
+    public String addItemV1(
+            @RequestParam String itemName,
+            @RequestParam int price,
+            @RequestParam Integer quantity,
+            Model model) {
+
+        Item item = new Item(itemName, price, quantity);
+        itemRepository.save(item);
+
+        model.addAttribute("item", item);
+
+        return "basic/item";
+    }
+
+//    @PostMapping("/add")
+    public String addItemV2(@ModelAttribute("item") Item item, Model model) {
+        // 넘어오는 데이터를 자동으로 맵핑해서 Item으로 만들어줌
+        itemRepository.save(item);
+        model.addAttribute("item", item);
+
+        return "basic/item";
+    }
+
+//    @PostMapping("/add")
+    public String addItemV3(@ModelAttribute("item") Item item, Model model) {
+        // @ModelAttribute는 2가지 기능을 하는데
+        // 1. Item 객체를 생성한다.
+        // 2. Model에 @ModelAttribute가 지정한 객체를 자동으로 넣어준다.
+        // @ModelAttribute("item")을 통해서 "item"으로 속성을 만들어준다.
+        // 만약 @ModelAttribute라고만 적으면 자동으로 클래스의 앞글자를 소문자로 바꾸어 자동으로 넣어준다.
+        // ex) HelloData -> helloData
+        // ex) Item -> item
+        itemRepository.save(item);
+//        model.addAttribute("item", item);
+        return "basic/item";
+    }
+
+    @PostMapping("/add")
+    public String addItemV4(Item item) {
+        // @ModelAttribute 생략 가능
+        itemRepository.save(item);
+        return "basic/item";
+    }
+
     /**
-     * 테스트용 데이터 추
+     * 테스트용 데이터 추가
      */
     @PostConstruct
     public void init() {
