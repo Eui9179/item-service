@@ -19,10 +19,8 @@ public class Item {
     @Column(length = 200, nullable = false)
     private String itemName;
 
-    @Column(nullable = false)
     private Integer price;
 
-    @Column(nullable = false)
     private Integer quantity;
 
     @Builder

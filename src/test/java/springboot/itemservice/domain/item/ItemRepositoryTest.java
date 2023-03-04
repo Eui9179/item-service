@@ -41,7 +41,4 @@ public class ItemRepositoryTest {
         Assertions.assertThat(item.getItemName()).isEqualTo(itemName);
         Assertions.assertThat(item.getPrice()).isEqualTo(price);
     }
-
-
-
 }
