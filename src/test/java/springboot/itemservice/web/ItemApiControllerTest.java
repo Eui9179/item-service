@@ -48,7 +48,7 @@ public class ItemApiControllerTest {
                 .quantity(quantity)
                 .build();
 
-        String url = "http://localhost:" + port + "/api/v1/items";
+        String url = "http://localhost:" + port + "/api/items";
 
         //when
         ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
@@ -61,7 +61,5 @@ public class ItemApiControllerTest {
 
         assertThat(itemList.get(0).getItemName()).isEqualTo(itemName);
         assertThat(itemList.get(0).getPrice()).isEqualTo(price);
-
     }
-
 }
