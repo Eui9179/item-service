@@ -9,6 +9,7 @@ import springboot.itemservice.web.dto.ItemSaveRequestDto;
 import springboot.itemservice.web.dto.ItemUpdateRequestDto;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -37,7 +38,10 @@ public class ItemService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. " + id));
 
         return new ItemResponseDto(entity);
+    }
 
+    public List<Item> findAll() {
+        return itemRepository.findAll();
     }
 
 }

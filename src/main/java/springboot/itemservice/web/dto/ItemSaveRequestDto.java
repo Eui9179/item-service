@@ -3,9 +3,11 @@ package springboot.itemservice.web.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import springboot.itemservice.domain.item.Item;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class ItemSaveRequestDto {
     private String itemName;

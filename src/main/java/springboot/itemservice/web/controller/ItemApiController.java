@@ -1,4 +1,4 @@
-package springboot.itemservice.web;
+package springboot.itemservice.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
