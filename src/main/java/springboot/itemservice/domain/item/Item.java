@@ -29,4 +29,10 @@ public class Item {
         this.price = price;
         this.quantity = quantity;
     }
+
+    public void update(String itemName, Integer price, Integer quantity) {
+        this.itemName = itemName;
+        this.price = price;
+        this.quantity = quantity;
+    }
 }
